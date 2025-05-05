@@ -1,0 +1,29 @@
+{
+  "name": "dashboard-financeira",
+  "version": "1.0.0",
+  "description": "Dashboard Financeira – Versão Inicial",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node src/index.ts",
+    "build": "tsc",
+    "dev": "ts-node-dev src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Joao-VictorCm/Dashboard-Financeira.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Joao-VictorCm/Dashboard-Financeira/issues"
+  },
+  "homepage": "https://github.com/Joao-VictorCm/Dashboard-Financeira#readme",
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "install": "^0.13.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
