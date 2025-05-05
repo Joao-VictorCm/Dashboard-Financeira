@@ -23,6 +23,7 @@ type Transacao = {
   tipo: "entrada" | "saida";
   valor: number;
   data: string;
+  categoria: string;
 };
 
 const transacoes: Transacao[] = [
@@ -32,6 +33,7 @@ const transacoes: Transacao[] = [
     tipo: "entrada",
     valor: 3000,
     data: "2025-05-01",
+    categoria: "Trabalho",
   },
   {
     id: 2,
@@ -39,6 +41,7 @@ const transacoes: Transacao[] = [
     tipo: "saida",
     valor: 1200,
     data: "2025-05-03",
+    categoria: "Aluguel",
   },
   {
     id: 3,
@@ -46,6 +49,7 @@ const transacoes: Transacao[] = [
     tipo: "entrada",
     valor: 800,
     data: "2025-05-05",
+    categoria: "Renda Extra",
   },
   {
     id: 4,
@@ -53,6 +57,15 @@ const transacoes: Transacao[] = [
     tipo: "saida",
     valor: 500,
     data: "2025-05-06",
+    categoria: "Alimentação",
+  },
+  {
+    id: 5,
+    tipo: "saida",
+    valor: 80,
+    descricao: "Uber",
+    data: "06-05-2025",
+    categoria: "Transporte",
   },
 ];
 
@@ -118,3 +131,19 @@ function resumoFinanceiroavancado(lista: Transacao[]) {
 }
 
 console.log(resumoFinanceiroavancado(transacoes));
+
+function exibirGraficos(label: string, valor: number) {
+  const blocos = Math.round(valor / 250);
+  const barra = "█".repeat(blocos);
+  const valorFormatado = valor.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+  console.log(`${label}: ${valorFormatado} | ${barra}`);
+}
+
+const graficoEntrada = calcularTotalPorTipo(transacoes, "entrada");
+const graficoSaida = calcularTotalPorTipo(transacoes, "saida");
+
+exibirGraficos("Entrada", graficoEntrada);
+exibirGraficos("Saida", graficoSaida);
