@@ -41,7 +41,7 @@ const transacoes: Transacao[] = [
     tipo: "saida",
     valor: 1200,
     data: "2025-05-03",
-    categoria: "Aluguel",
+    categoria: "Moradia",
   },
   {
     id: 3,
@@ -147,3 +147,32 @@ const graficoSaida = calcularTotalPorTipo(transacoes, "saida");
 
 exibirGraficos("Entrada", graficoEntrada);
 exibirGraficos("Saida", graficoSaida);
+
+function relatorioSaidasPorCategoria(
+  lista: Transacao[],
+  categoria: "Moradia" | "Alimentação" | "Transporte"
+) {
+  const filtroCategoria = lista.filter(
+    (index) => index.categoria === categoria
+  );
+  return filtroCategoria.reduce((prevValue, elem) => prevValue + elem.valor, 0);
+}
+
+function exibirGraficosDetalhado(label: string, valor: number) {
+  const blocos = Math.round(valor / 300);
+  const barra = "█".repeat(blocos);
+  const valorFormatado = valor;
+  console.log(`${label}: ${valorFormatado.toFixed(2)}% | ${barra}`);
+}
+
+const totalSaida = calcularTotalPorTipo(transacoes, "saida");
+const moradia =
+  (relatorioSaidasPorCategoria(transacoes, "Moradia") / totalSaida) * 100;
+const alimentacao =
+  (relatorioSaidasPorCategoria(transacoes, "Alimentação") / totalSaida) * 100;
+const trasporte =
+  (relatorioSaidasPorCategoria(transacoes, "Transporte") / totalSaida) * 100;
+
+exibirGraficosDetalhado("🏠 Moradia:", moradia);
+exibirGraficosDetalhado("🍔 Alimentação:", alimentacao);
+exibirGraficosDetalhado("🚗 Transporte:", trasporte);
