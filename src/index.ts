@@ -82,42 +82,39 @@ function relatorioFinanceiro(lista: Transacao[]) {
 
 console.log(relatorioFinanceiro(transacoes));
 
-
-
-function calcularTotalPorTipo(lista: Transacao[], tipo: "entrada" | "saida"){
-  return lista.filter((transacoes) => transacoes.tipo === tipo).reduce((soma, transacoes) => soma + transacoes.valor, 0)
+function calcularTotalPorTipo(lista: Transacao[], tipo: "entrada" | "saida") {
+  return lista
+    .filter((transacoes) => transacoes.tipo === tipo)
+    .reduce((soma, transacoes) => soma + transacoes.valor, 0);
 }
 
-function obter
+function obterMaiorGasto(lista: Transacao[], limite: number) {
+  return lista
+    .filter((index) => index.tipo === "saida")
+    .sort((a, b) => b.valor - a.valor)
+    .slice(0, limite)
+    .map((gasto) => `${gasto.descricao} R$${gasto.valor.toFixed(2)}`)
+    .join(" | ");
+}
 
 function resumoFinanceiroavancado(lista: Transacao[]) {
-  const saidas = lista.filter((index) => index.tipo === "saida");
-  const maioresGastos = saidas
-    .sort((a, b) => b.valor - a.valor)
-    .slice(0, 5)
-    .map((index) => {
-      return `${index.descricao} ${index.valor} |`;
-    });
-  const totalSaidas = saidas.reduce((soma, total) => soma + total.valor, 0);
+  const totalEntradas = calcularTotalPorTipo(lista, "entrada");
+  const totalSaidas = calcularTotalPorTipo(lista, "saida");
+  const saldoTotal = totalEntradas - totalSaidas;
 
-  const entradas = lista.filter((index) => index.tipo === "entrada");
-  const totalEntradas = entradas.reduce((soma, total) => soma + total.valor, 0);
+  const maioresGastos = obterMaiorGasto(lista, 5);
 
-  let saldoTotal = totalEntradas - totalSaidas;
+  const saldoFormatado = saldoTotal.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 
-  if (saldoTotal < 0) {
-    return `Seu saldo esta negativo | ${saldoTotal.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    })}`;
-  } else {
-    return `5 maiores gastos: ${maioresGastos.join(" ")}\nSaldo atual: ${
-      saldoTotal < 0 ? "Negativo" : "Positivo"
-    } | ${saldoTotal.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    })}`;
-  }
+  const alertaSaldo =
+    saldoTotal < 0
+      ? "⚠️ Atenção: seu saldo está negativo!"
+      : "✅ Saldo positivo.";
+
+  return `5 maiores gastos: ${maioresGastos} | Saldo atual: ${saldoFormatado} | ${alertaSaldo}`.trim();
 }
 
 console.log(resumoFinanceiroavancado(transacoes));
