@@ -17,7 +17,7 @@ Saldo final
 Função para listar as transações formatadas.
 */
 
-type Transacao = {
+export type Transacao = {
   id: number;
   descricao: string;
   tipo: "entrada" | "saida";
@@ -26,7 +26,7 @@ type Transacao = {
   categoria: string;
 };
 
-const transacoes: Transacao[] = [
+export const transacoes: Transacao[] = [
   {
     id: 1,
     descricao: "Salário",
