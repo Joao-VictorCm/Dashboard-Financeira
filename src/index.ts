@@ -15,6 +15,8 @@ Total de entradas
 Total de saídas
 Saldo final
 Função para listar as transações formatadas.
+Menu no clt interativo com multiplas escolhas
+
 */
 
 export type Transacao = {
