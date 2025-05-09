@@ -6,7 +6,7 @@ function menu() {
   const addDados = require("prompt-sync")({ sigint: true });
 
   function coletarDados() {
-    let id = transacoes.length;
+    let id = transacoes.length + 1;
     let descricao;
     descricao = addDados(` Descrição `);
     let valor;
@@ -44,7 +44,18 @@ function menu() {
     });
   }
 
-  function deleteTransacao(lista: Transacao[], id: number) {}
+  function deleteTransacao(id: number) {
+    const existe = transacoes.find((item) => item.id === id);
+    if (!existe) {
+      console.log("Erro ao deletear esta transação");
+    }
+
+    const index = transacoes.findIndex((item) => item.id === id);
+    if (index !== -1) {
+      transacoes.splice(index, 1);
+      console.log("Transação removida com sucesso!");
+    }
+  }
 
   let opcao;
   opcao = menu(`
@@ -64,6 +75,11 @@ function menu() {
         transacoes.push(novaTransacao);
         break;
       case "2":
+        let id;
+        id = addDados(` ID da transação a ser deleteda `);
+        const idNumber = Number(id);
+        deleteTransacao(idNumber);
+
         break;
       case "3":
         break;
