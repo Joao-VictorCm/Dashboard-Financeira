@@ -1,3 +1,4 @@
+import inquirer from "inquirer";
 import { transacoes } from ".";
 import { Transacao } from ".";
 
@@ -10,26 +11,44 @@ function menu() {
 
   function coletarDados() {
     let id = transacoes.length + 1;
-    let descricao;
-    descricao = addDados(` Descrição `);
-    let valor;
-    valor = addDados(` Valor R$ `);
-    let tipo;
-    tipo = addDados(` entrada | saida `);
-    let data;
-    data = addDados(` Data `);
-    let categoria;
-    categoria = addDados(` Moradia | Alimentação | Transporte `);
-    const valorNumber = Number(valor);
 
-    return {
-      id,
-      descricao,
-      valor: valorNumber,
-      tipo,
-      data,
-      categoria,
-    };
+    const respostas = inquirer.prompt([
+      {
+        type: "input",
+        name: "descricao",
+        message: "Descrição",
+      },
+      {
+        type: "number",
+        name: "valor",
+        message: "Valor R$",
+      },
+      {
+        type: "list",
+        name: "tipo",
+        message: "Tipo (Entrada / Saida)",
+        choices: ["entrada", "saida"],
+      },
+      {
+        type: "input",
+        name: "data",
+        message: "Data",
+      },
+      {
+        type: "list",
+        name: "categoria",
+        message: "Categorira",
+        choices: ["Moradia", "Alimentação", "Transporte"],
+      },
+    ]);
+
+    const descricao = respostas.descricao;
+    const valor = respostas.valor;
+    const tipo = respostas.tipo;
+    const data = respostas.data;
+    const categoria = respostas.categoria;
+
+    return { id, descricao, valor, tipo, data, categoria };
   }
 
   function listarTransacao(lista: Transacao[]) {
